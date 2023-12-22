@@ -5,6 +5,9 @@ provider:
   name: aws
   runtime: nodejs16.x
 
+plugins:
+  - serverless-plugin-typescript
+
 functions:
   createPDF:
     handler: handler.createPDF
