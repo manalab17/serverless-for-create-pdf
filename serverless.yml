@@ -1,0 +1,21 @@
+service: serverless-for-create-pdf
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+
+functions:
+  createPDF:
+    handler: handler.createPDF
+    events:
+      - schedules:
+          name: create-pdf-warmer
+          rate: rate(4 minutes)
+          enabled: true
+          input:
+            isWarmer: true
+      - httpApi:
+          path: /create-pdf
+          method: post
+          cors: true
