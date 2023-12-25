@@ -1,6 +1,8 @@
 import axios from "axios";
 import {UploadFileParams} from "../../type/service";
 
+const FormData = require('form-data');
+
 export async function uploadFile(params: UploadFileParams) {
     const {
         fileBuffer,
