@@ -3,6 +3,6 @@ export type CreatePDFParams = {
 }
 
 export type CreatePDFWithUploadParams = CreatePDFParams & {
-    fileName: string;
     uploadUrl: string;
+    uploadParams?: { [key: string]: string };
 }
