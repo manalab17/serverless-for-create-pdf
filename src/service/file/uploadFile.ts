@@ -17,8 +17,6 @@ export async function uploadFile(params: UploadFileParams) {
 
     formData.append("file", fileBuffer);
 
-    let filePath = '';
-
     //  Upload to S3
     await axios.post(uploadUrl, formData, {
         headers: {
@@ -26,11 +24,6 @@ export async function uploadFile(params: UploadFileParams) {
             "Authorization": ""
         },
         withCredentials: false
-    }).then((res) => {
-        const { data } = res;
-        const {fields: {key = ''} } = data;
-
-        filePath = key;
     }).catch((e: any) => {
         console.error('Failed to uploadFile : ', e.message);
         throw new Error();
@@ -38,6 +31,6 @@ export async function uploadFile(params: UploadFileParams) {
 
     return {
         uploadUrl,
-        filePath,
+        filePath: uploadParams["key"],
     };
 }
