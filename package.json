@@ -11,10 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "aws-lambda": "^1.0.7",
+    "@sparticuz/chromium": "111.0.0",
     "puppeteer-core": "19.7.0"
   },
   "devDependencies": {
-    "@sparticuz/chromium": "111.0.0",
     "@types/aws-lambda": "^8.10.130",
     "@types/node": "^20.10.5",
     "serverless": "^3.38.0",
