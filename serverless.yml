@@ -27,6 +27,18 @@ functions:
       - httpApi:
           path: /create-pdf
           method: post
+  createPDFWithUpload:
+    handler: handler.createPDFWithUploadHandler
+    events:
+      - schedule:
+          name: create-pdf-with-upload-warmer
+          rate: rate(10 minutes)
+          enabled: true
+          input:
+            isWarmer: true
+      - httpApi:
+          path: /create-pdf-with-upload
+          method: post
 
 package:
   exclude:
