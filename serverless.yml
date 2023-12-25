@@ -4,6 +4,9 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs16.x
+  memorySize: 1024
+  region: "ap-northeast-2"
+  timeout: 29
   httpApi:
     cors: true
 
@@ -13,14 +16,18 @@ plugins:
 
 functions:
   createPDF:
-    handler: handler.createPDF
+    handler: handler.createPDFHandler
     events:
       - schedule:
           name: create-pdf-warmer
-          rate: rate(4 minutes)
+          rate: rate(10 minutes)
           enabled: true
           input:
             isWarmer: true
       - httpApi:
           path: /create-pdf
           method: post
+
+package:
+  exclude:
+    - undefined/**
