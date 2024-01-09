@@ -1,11 +1,11 @@
-import {Browser} from "puppeteer-core";
+import {Browser, PDFOptions} from "puppeteer-core";
 
 const puppeteer = require("puppeteer-core");
 
 const chromium = require("@sparticuz/chromium");
 chromium.setHeadlessMode = true;
 
-export async function createPDFFromHTMLText(htmlText: string): Promise<Buffer> {
+export async function createPDFFromHTMLText(htmlText: string, pdfOptions?: Partial<PDFOptions>): Promise<Buffer> {
     let browser: Browser | null = null;
 
     try {
@@ -30,11 +30,12 @@ export async function createPDFFromHTMLText(htmlText: string): Promise<Buffer> {
             format: 'a4',
             printBackground: true,
             margin: {
-                left: '0px',
-                top: '0px',
-                right: '0px',
-                bottom: '0px',
-            }
+                left: '38px',
+                top: '38px',
+                right: '38px',
+                bottom: '38px',
+            },
+            ...(pdfOptions || {})
         });
 
         return pdfFileBuffer;

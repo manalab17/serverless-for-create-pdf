@@ -11,6 +11,7 @@ export async function createPDFWithUpload(event: APIGatewayEvent) {
 
         const {
             htmlContent,
+            pdfOptions,
             uploadUrl,
             uploadParams = {}
         } = parsedParams;
@@ -23,7 +24,7 @@ export async function createPDFWithUpload(event: APIGatewayEvent) {
             throw new Error('Upload parameter doesn\'t exist.');
         }
 
-        const buffer = await createPDFFromHTMLText(htmlContent);
+        const buffer = await createPDFFromHTMLText(htmlContent, pdfOptions);
         const result = await uploadFile({
             fileBuffer: buffer,
             uploadUrl,

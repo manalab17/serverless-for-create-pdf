@@ -8,13 +8,16 @@ export async function createPDF(event: APIGatewayEvent) {
         const { body } = event;
         const parsedParams: CreatePDFParams = (body ? JSON.parse(body) : {});
 
-        const { htmlContent } = parsedParams;
+        const {
+            htmlContent,
+            pdfOptions
+        } = parsedParams;
 
         if (!htmlContent) {
             throw new Error('Parameter doesn\'t exist.');
         }
 
-        const buffer = await createPDFFromHTMLText(htmlContent);
+        const buffer = await createPDFFromHTMLText(htmlContent, pdfOptions);
         const formattedBuffer = buffer.toString('base64');
 
         return formatAPIGatewayProxyResult({
