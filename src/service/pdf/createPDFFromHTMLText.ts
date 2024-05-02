@@ -14,7 +14,10 @@ export async function createPDFFromHTMLText(htmlText: string, pdfOptions?: Parti
         );
 
         const launchParams = {
-            args: chromium.args,
+            args: [
+                ...chromium.args,
+                '--font-render-hinting=none'
+            ],
             executablePath: await chromium.executablePath(),
             defaultViewport: chromium.defaultViewport,
             headless: chromium.headless,
