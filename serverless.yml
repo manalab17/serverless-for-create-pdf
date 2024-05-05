@@ -3,7 +3,10 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs18.x
+  runtimeManagement:
+    mode: manual
+    arn: arn:aws:lambda:ap-northeast-2::runtime:b475b23763329123d9e6f79f51886d0e1054f727f5b90ec945fcb2a3ec09afdd
   memorySize: 1024
   region: "ap-northeast-2"
   timeout: 29

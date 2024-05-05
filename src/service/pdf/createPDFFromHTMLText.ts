@@ -9,10 +9,6 @@ export async function createPDFFromHTMLText(htmlText: string, pdfOptions?: Parti
     let browser: Browser | null = null;
 
     try {
-        await chromium.font(
-            "https://cdn.jsdelivr.net/gh/webfontworld/Noto/NotoSansKR-Regular.ttf"
-        );
-
         const launchParams = {
             args: [
                 ...chromium.args,
