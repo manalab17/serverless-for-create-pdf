@@ -114,9 +114,9 @@ components:
           type: integer
           description: Print scale option
         format:
-          type: object
+          type: string
           description: PaperFormat type from puppeteer
-          example: {}
+          example: a4
   requestBodies:
     CreatePDF:
       content:
