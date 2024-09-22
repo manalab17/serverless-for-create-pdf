@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: MANALAB17/serverless-for-create-pdf
+  description: serverless-for-create-pdf with korean font
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/MANALAB17/serverless-for-create-pdf/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: development
+  description: in dev enviroment
+paths:
+  /create-pdf:
+    post:
+      tags:
+      - development
+      summary: Request to create PDF file
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      requestBody:
+        $ref: '#/components/requestBodies/CreatePDF'
+      responses:
+        "201":
+          description: Create PDF file successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "400":
+          description: bad input parameter
+  /create-pdf-with-upload:
+    post:
+      tags:
+      - development
+      summary: Request to create PDF file with upload to AWS s3
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      requestBody:
+        $ref: '#/components/requestBodies/CreatePDFWithPDF'
+      responses:
+        "201":
+          description: Create pdf file and upload file to AWS S3 successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+        "400":
+          description: bad input parameter
+components:
+  schemas:
+    CreatePDFParams:
+      required:
+      - htmlContent
+      type: object
+      properties:
+        htmlContent:
+          type: string
+          description: html contents for create PDF
+          example: <html><head>...</head><body>...</body></html>
+        pdfOptions:
+          $ref: '#/components/schemas/CreatePDFParams_pdfOptions'
+    CreatePDFWithUploadParams:
+      allOf:
+      - $ref: '#/components/schemas/CreatePDFParams'
+      - required:
+        - uploadUrl
+        type: object
+        properties:
+          uploadUrl:
+            type: string
+            description: url to request uploading AWS S3
+            example: https://~~~.com/~~~
+          uploadParams:
+            type: object
+            description: "parameters for upload (ex: aws token, ...)"
+    inline_response_201:
+      required:
+      - fileBuffer
+      type: object
+      properties:
+        fileBuffer:
+          type: string
+          description: created PDF file buffer with formatting base64
+    inline_response_201_1:
+      required:
+      - htmlContent
+      type: object
+      properties:
+        uploadUrl:
+          type: string
+          description: uploaded to url
+        filePath:
+          type: string
+    CreatePDFParams_pdfOptions_margin:
+      type: object
+      properties:
+        top:
+          type: string
+        left:
+          type: string
+        right:
+          type: string
+        bottom:
+          type: string
+      description: Custom margin styles
+    CreatePDFParams_pdfOptions:
+      type: object
+      properties:
+        margin:
+          $ref: '#/components/schemas/CreatePDFParams_pdfOptions_margin'
+        scale:
+          type: integer
+          description: Print scale option
+        format:
+          type: object
+          description: PaperFormat type from puppeteer
+          example: {}
+  requestBodies:
+    CreatePDF:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatePDFParams'
+    CreatePDFWithPDF:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatePDFWithUploadParams'
